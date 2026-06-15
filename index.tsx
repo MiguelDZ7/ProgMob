@@ -1,24 +1,54 @@
-import { Input } from "@/app/components/input";
-import { Image, StyleSheet, Text, View } from "react-native"
-export default function Index(){
-    return(
-        <View style={{ flex:1, justifyContent: "center", alignItems: "center" }}>
-          <Text style={styles.title}>Programação Mobile.</Text>
-          <Text style={styles.subtitle}>Acesse sua conta</Text>
-          <View style={styles.form}>
-            <Input placeholder="E-mail" />
-            <Input placeholder="Senha" />
-          </View>  
+import React from "react";
+import { 
+    Image, 
+    KeyboardAvoidingView, 
+    Platform, 
+    ScrollView, 
+    StyleSheet, 
+    Text, 
+    View 
+} from "react-native";
+import { Link } from "expo-router";
+import { Input } from "@/components/input";
+import { Button } from "@/components/button";
 
-          <Image
-            source={require("@/src/app/assets/PR-GUY.jpg")}
-            style={styles.illustration}
-           />
-        </View>    
-        
+export default function Index() {
+    return (
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.select({ ios: "padding", android: "height" })}
+        >
+            <ScrollView
+                contentContainerStyle={{ flexGrow: 1 }}
+                keyboardShouldPersistTaps="handled"
+            >
+                <View style={styles.container}>
+                    {/* CORRIGIDO: Use o caminho relativo correto baseado na sua pasta anterior */}
+                    <Image
+                        source={require("/home/alunos/Documentos/ProgMobMig/meu-app/src/assets/PR-GUY.jpg")} 
+                        style={styles.illustration}
+                    />
+                    
+                    <Text style={styles.title}>Programação Mobile.</Text>
+                    <Text style={styles.subtitle}>Acesse sua conta</Text>
+                    
+                    <View style={styles.form}>
+                        <Input placeholder="E-mail" keyboardType="email-address" />
+                        <Input placeholder="Senha" secureTextEntry />
+                        <Button label={"Logar"} />
+                    </View>
+                    
+                    <Text style={styles.footerText}>
+                        Não tem uma conta ?{" "}
+                        <Link href="/signup" style={styles.footerLink}>
+                            Cadastre-se aqui.
+                        </Link>
+                    </Text>
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -39,5 +69,16 @@ const styles = StyleSheet.create({
   illustration: {
     width: "25%",
     height: 300,
+  },
+
+  footerText: {
+    textAlign: "center",
+    marginTop: 24,
+    color: "#000000",
+  },
+
+  footerLink: {
+    color: "#0A1172",
+    fontWeight: 700,
   },
 })
